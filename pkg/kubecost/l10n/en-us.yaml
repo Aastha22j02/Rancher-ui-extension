@@ -1,0 +1,17 @@
+kubecost:
+  title: Kubecost - Costs breakdown for the last month
+  appNotInstalled: Kubecost is not installed on this cluster! You will need to install Kubecost first.
+  noDataAvailable: No data available
+  unknownError: An unknown error occurred. Please try again
+  costs:
+    cpuCost: CPU
+    ramCost: RAM
+    pvCost: PV    
+    gpuCost: GPU
+    networkCost: Network
+    lbCost: LB     
+    totalCost: Total
+  noCosts: Metrics not available
+  namespaceTab:
+    label: Kubecost
+    tootlip: Costs associated with this namespace

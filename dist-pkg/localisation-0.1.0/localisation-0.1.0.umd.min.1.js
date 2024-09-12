@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackJsonplocalisation_0_1_0"]=("undefined"!==typeof self?self:this)["webpackJsonplocalisation_0_1_0"]||[]).push([[1],{"186b":function(e,o){const n=[{login:{howdy:"Hallo!",welcome:"Willkommen bei {vendor}"},landing:{welcomeToRancher:"Willkommen bei {vendor}!!!"}}];e.exports=n.length<=1?n[0]:n}}]);
+//# sourceMappingURL=localisation-0.1.0.umd.min.1.js.map
