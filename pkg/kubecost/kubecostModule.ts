@@ -45,7 +45,7 @@ export async function getKubecostData(options:kubecostDataOptions):Promise<kubec
   const targetNamespace = options.targetNamespace;
   const prefix = `/k8s/clusters/${ options.clusterId }`;
   const namespace = kubecostApp.metadata?.namespace || 'kubecost';
-  const service = 'http:kubecost-cost-analyzer:9090'; // hardcoded for now...
+  const service = 'http:cost-analyzer:9090'; // hardcoded for now...
 
   const path = `model/allocation?window=${ options.window || '1d' }&aggregate=${ options.aggregate || 'namespace' }&accumulate=true&chartType=costovertime&costUnit=cumulative&external=false&filter=&idle=true&idleByNode=false&includeSharedCostBreakdown=false&shareCost=0&shareIdle=false&shareLabels=&shareNamespaces=&shareSplit=weighted&shareTenancyCosts=false`;
   const url = `${ prefix }/api/v1/namespaces/${ namespace }/services/${ service }/proxy/${ path }`;

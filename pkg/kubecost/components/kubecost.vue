@@ -93,24 +93,8 @@ export default {
       <h3 class="mb-40">
         {{ t('kubecost.title') }}
       </h3>
-      <h4
-        v-if="info"
-        :class="`text-${ info.type }`"
-      >
-        {{ info.msg }}
-      </h4>
-      <div
-        v-else
-        class="label-values"
-      >
-        <LabelValue
-          v-for="cost of costs"
-          :key="cost.name"
-          class="label-value"
-          :name="cost.name"
-          :value="cost.value"
-        />
-      </div>
+     
+    
       <PieChart
         v-if="costs.length"
         :key="key"

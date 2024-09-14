@@ -24,6 +24,18 @@ export default function(plugin: IPlugin): void {
       component:  () => import('./components/kubecost.vue')
     }
   );
+  plugin.addTab(
+    TabLocation.RESOURCE_DETAIL,
+    { resource: ['namespace'] },
+    {
+      name:       'aastha',
+      weight:     -5,
+      component:  () => import('./components/kubecost.vue')
+    }
+  );
+
 
   plugin.metadata.icon = require('./kc.svg');
+  plugin.addProduct(require('./product'));
+
 }
