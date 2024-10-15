@@ -1,20 +1,20 @@
 <template>
+  
   <div>
+    
     <!-- Dashboard Header with Namespace Selector -->
     <div class="dashboard-header">
       <div class="namespace-dropdown">
-        <label for="namespace">Select Namespace:</label>
-        
+        <div>
 
-        <!-- Dropdown for namespaces -->
-        <ButtonDropdown
-          v-bind="{
-            buttonLabel: selectedNamespace || 'Select Namespace',
-            dropdownOptions: namespaces,
-            size: 'sm'
-          }"
-          @option-selected="selectNamespace"
-        />
+        <!-- <label >Select Namespace:</label> -->
+        <select v-model="selectedNamespace" class="border border-gray-300 p-2 rounded">
+          <option disabled value="">Select Namespace</option>
+          <option v-for="namespace in namespaces" :key="namespace" :value="namespace">
+            {{ namespace }}
+          </option>
+        </select>
+      </div>
       </div>
     </div>
 
@@ -34,123 +34,105 @@
 
       <div class="card-grid">
         
-        <!-- Cards for various Kubernetes objects -->
-        <r-card title="Pod" :description="'Manage and view your Pods'">
-        <button  @click="go">submit</button>
-
-          <template >
-
-            <button  @click="go" >Go to Pod</button>
-          </template>
-        </r-card>
-
-        <!-- <r-card
-    v-bind="{title:'Card title',body:'Some quick example text to build on the card title and make up the bulk of the cards content.'}"
-  >
-    <template v-if="true" v-slot:title>Card title</template>
-    <template v-if="true" v-slot:body>
-      Some quick example text to build on the card title and make up the bulk of
-      the cards content
-    </template>
-  </r-card> -->
- 
-
-        <r-card title="Deployment" :description="'Manage your Deployments'">
-          <template #footer>
-            <button class="r-button">Go to Deployment</button>
-          </template>
-        </r-card>
-
-        <r-card title="Services" :description="'View and configure Services'">
-          <template #footer>
-            <button class="r-button">Go to Services</button>
-          </template>
-        </r-card>
-
-        <r-card title="StorageClass" :description="'View StorageClass details'">
-          <template #footer>
-            <button class="r-button">Go to StorageClass</button>
-          </template>
-        </r-card>
-
-        <r-card title="Secrets" :description="'Manage application Secrets'">
-          <template #footer>
-            <button class="r-button">Go to Secrets</button>
-          </template>
-        </r-card>
+        <div class="col-md-6 mb-4">
+        <div class="card shadow-sm card-spacing">
+          <div class="card-body">
+            <h5 class="card-title">Pod</h5>
+            <p class="card-text">Manage and view your Pods in the selected namespace.</p>
+            <br>
+            <a @click="goToPods" class="btn btn-primary">Go to Pods</a>
+          </div>
+        </div>
       </div>
+
+      <!-- Deployment Card -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm card-spacing">
+          <div class="card-body">
+            <h5 class="card-title">Deployment</h5>
+            <p class="card-text">View and manage your Deployments easily.</p>
+            <br>
+
+            <a @click="goToDeployments" class="btn btn-primary">Go to Deployments</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Card -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm card-spacing">
+          <div class="card-body">
+            <h5 class="card-title">Services</h5>
+            <p class="card-text">Explore the Services running in your cluster.</p>
+            <br>
+
+            <a @click="goToServices" class="btn btn-primary">Go to Services</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- StorageClass Card -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm card-spacing">
+          <div class="card-body">
+            <h5 class="card-title">StorageClass</h5>
+            <p class="card-text">Manage and configure StorageClasses.</p>
+            <br>
+
+            <a @click="goToStorageClass" class="btn btn-primary">Go to StorageClass</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secrets Card -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm card-spacing">
+          <div class="card-body">
+            <h5 class="card-title">Secrets</h5>
+            <p class="card-text">View and manage Kubernetes Secrets.</p>
+            <br>
+
+            <a @click="goToSecrets" class="btn btn-primary">Go to Secrets</a>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
 
-<script>
-import { Card as RCard, Button as RButton } from '@rancher/components';
-import ButtonDropdown from '@shell/components/ButtonDropdown'; // Rancher ButtonDropdown component
-import axios from 'axios';
-export default {
-  components: {
-    RCard,
-    RButton,
-    ButtonDropdown,
-  },
-  data() {
-    return {
-      namespaces: [], // Use array for better dropdown management
-      selectedNamespace: null,
-    };
-  },
-  methods: {
-    
-    async go() {
-  console.log("this is my function");
-  
-  // Create FormData object to send the file
-  const formData = new FormData();
-  const fileInput = this.$refs.fileInput; // Reference to the file input element
-  console.log(fileInput)
-  formData.append("file", fileInput.files[0]); // Append the file to FormData
+<script setup>
+import { ref } from 'vue';
+// import ButtonDropdown from '@shell/components/ButtonDropdown';
 
-  try {
-    // Send POST request with FormData
-    const response = await axios.post("http://localhost:8001/upload_kubeconfig", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+// Setup the data and methods
+const selectedNamespace = ref('');
+const namespaces = ['default', 'kube-system', 'kube-public', 'custom-namespace'];
 
-    // Access the response data
-    console.log(response.data);
-  } catch (error) {
-    console.error("Error uploading file:", error);
-  }
-},
+// Functions to handle button clicks for different sections
+const goToPods = () => {
+  console.log('Navigating to Pods');
+  // Call the function to fetch Pods or navigate to the Pods page
+};
 
-    async fetchNamespaces() {
-      try {
-        const response = await fetch("/v3/projects/{projectId}/namespaces", {
-          method: "GET",
-         
-        });
-        const data = await response.json();
-        this.namespaces = this.formatNamespaces(data.data);
-      } catch (error) {
-        console.error("Errorfetching namespaces:", error);
-      }
-    },
-    formatNamespaces(namespacesArray) {
-      return namespacesArray.map(namespace => ({
-        label: namespace.id, // Assuming 'id' is the namespace identifier
-        value: namespace.id,
-      }));
-    },
-    selectNamespace(namespace) {
-      this.selectedNamespace = namespace;
-      console.log("Selected namespace:", namespace);
-    },
-  },
-  mounted() {
-    // this.fetchNamespaces(); // Fetch namespaces when the component is mounted
-  },
+const goToDeployments = () => {
+  console.log('Navigating to Deployments');
+  // Call the function to fetch Deployments or navigate to the Deployments page
+};
+
+const goToServices = () => {
+  console.log('Navigating to Services');
+  // Call the function to fetch Services or navigate to the Services page
+};
+
+const goToStorageClass = () => {
+  console.log('Navigating to StorageClass');
+  // Call the function to fetch StorageClasses or navigate to the StorageClasses page
+};
+
+const goToSecrets = () => {
+  console.log('Navigating to Secrets');
+  // Call the function to fetch Secrets or navigate to the Secrets page
 };
 </script>
 
@@ -193,5 +175,36 @@ export default {
 
 .r-button:hover {
   background-color: #0056b3;
+}
+.card-spacing {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: 1px solid #dee2e6; /* Add this line for the border */
+}
+
+.card-spacing:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #006fbb;
+}
+
+.card-text {
+  color: #4a4a4a;
+}
+
+.btn-primary {
+  background-color: #297DB4;
+  border-color: #297DB4;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #005a99;
+  border-color: #005a99;
 }
 </style>
