@@ -5,8 +5,8 @@ const BLANK_CLUSTER = '_';
 export function init($plugin:any, store:any) {
   const YOUR_PRODUCT_NAME = 'k8sGPT';
   const YOUR_K8S_RESOURCE_NAME = 'provisioning.cattle.io.cluster';
-  const CUSTOM_PAGE_NAME = 'page1';
-  const CUSTOM_PAGE_NAME1 = 'page2';
+  const CUSTOM_PAGE_NAME = 'K8sGPT';
+  const CUSTOM_PAGE_NAME1 = 'Clusters';
 
 
   const {

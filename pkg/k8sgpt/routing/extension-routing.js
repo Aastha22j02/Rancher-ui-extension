@@ -11,8 +11,8 @@ const BLANK_CLUSTER = '_';
 // we recommend this to be defined on a config file and exported
 // so that the developer can import it wherever it needs to be used
 const YOUR_PRODUCT_NAME = 'k8sGPT';
-const CUSTOM_PAGE_NAME = 'page1';
-const CUSTOM_PAGE_NAME1 = 'page2';
+const CUSTOM_PAGE_NAME = 'K8sGPT';
+const CUSTOM_PAGE_NAME1 = 'Clusters';
 
 
 const routes = [
